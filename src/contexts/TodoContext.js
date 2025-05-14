@@ -14,7 +14,7 @@ const TodoContext = createContext({
   toggleCompleted: (isComplete) => {},
 });
 
-const TodoProvider = TodoContext.Provider();
+const TodoProvider = TodoContext.Provider;
 
 const useTodo = () => {
   useContext(TodoContext);
