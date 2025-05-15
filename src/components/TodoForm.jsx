@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTodo } from "../contexts";
 
 function TodoForm() {
+  const [todoInput, setTodoInput] = useState("");
+  const { addTodo } = useTodo();
+
+  const add = (e) => {
+    e.preventDefault();
+    if (!todoInput.trim()) return;
+    addTodo({ todo: todoInput, isCompleted: false });
+    setTodoInput("");
+  };
+
   return (
-    <form className="flex">
+    <form onSubmit={add} className="flex gap-2">
       <input
+        value={todoInput}
+        onChange={(e) => setTodoInput(e.target.value)}
         type="text"
-        placeholder="Write Todo..."
-        className="w-full border border-black/10 rounded-l-lg px-3 outline-none duration-150 bg-white/20 py-1.5"
+        placeholder="What's on your mind?"
+        className="w-full px-4 py-2 bg-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 placeholder:text-gray-400"
       />
       <button
         type="submit"
-        className="rounded-r-lg px-3 py-1 bg-green-600 text-white shrink-0"
+        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition"
       >
         Add
       </button>
