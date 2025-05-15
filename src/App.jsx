@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 import { TodoProvider } from "./contexts";
+import { TodoForm, TodoItem, CreatedBy } from "./components";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -38,7 +38,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify("todos"));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   return (
@@ -51,15 +51,22 @@ function App() {
         toggleCompleted,
       }}
     >
-      <div className="bg-[#172842] min-h-screen py-8">
-        <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
-          <h1 className="text-2xl font-bold text-center mb-8 mt-2">
-            Manage Your Todos
+      <div className="bg-gradient-to-br from-indigo-900 via-purple-800 to-purple-900 min-h-screen py-10 px-4">
+        <div className="w-full max-w-2xl mx-auto bg-white/10 backdrop-blur-md shadow-xl rounded-lg p-6 text-white">
+          <h1 className="text-3xl font-bold text-center mb-6">
+            📝 Your Todo List
           </h1>
-          <div className="mb-4">{/* Todo form goes here */}</div>
-          <div className="flex flex-wrap gap-y-3">
-            {/*Loop and Add TodoItem here */}
+
+          <div className="mb-6">
+            <TodoForm />
           </div>
+
+          <div className="space-y-3">
+            {todos.map((todo) => (
+              <TodoItem key={todo.id} todo={todo} />
+            ))}
+          </div>
+            <CreatedBy/>
         </div>
       </div>
     </TodoProvider>
